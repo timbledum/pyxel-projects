@@ -48,6 +48,11 @@ class Sound:
             note="", tone="s", volume="2", effect="n", speed=4
         )
 
+        pyxel.sound(5).set(
+            note="b1c2", tone="p", volume="2", effect="n", speed=20
+        )
+        self.buildup = False
+
         pyxel.sound(63).set(
             note="r" * 16, tone="s", volume="1", effect="n", speed=self.sound_speed
         )
@@ -59,13 +64,25 @@ class Sound:
         pyxel.play(ch=2, snd=2, loop=True)
 
     def sfx_pickup(self):
-        pyxel.play(ch=3, snd=3)
+        if self.buildup:
+            pyxel.play(ch=3, snd=3)
+            self.buildup = False
 
     def sfx_jump(self):
         rand_ints = [randint(1,10) for _ in range(10)]
         rand_notes = list(accumulate(rand_ints))
         pyxel.sound(4).note = rand_notes
         pyxel.play(ch=3, snd=4)
+
+    def sfx_buildup(self):
+        if not self.buildup:
+            pyxel.play(ch=3, snd=5, loop=True)
+            self.buildup = True
+
+    def sfx_stop(self):
+        if self.buildup:
+            pyxel.play(ch=3, snd=63)
+            self.buildup = False
 
     @staticmethod
     def octave_shift(snd, octaves=1):

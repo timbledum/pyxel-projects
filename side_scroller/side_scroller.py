@@ -49,6 +49,11 @@ class App:
             self.test_val += 1
         if pyxel.btn(pyxel.KEY_O):
             self.test_val -= 1
+        if pyxel.btnp(pyxel.KEY_S):
+            if self.player.grounded:
+                self.sound.sfx_buildup()
+        if not pyxel.btn(pyxel.KEY_S):
+            self.sound.sfx_stop()
         if pyxel.btnp(pyxel.KEY_S, 60, 30):
             print(pyxel.frame_count)
             if self.player.grounded:
@@ -113,6 +118,7 @@ class App:
 
         if self.player.jump_chg >= 4:
             self.sparkle_emitter.sparkle(self.test_val)
+            self.sound.sfx_pickup()
 
     def offset_delta(self):
         return self.camera.offset_x - self.camera.last_offset_x, self.camera.offset_y - self.camera.last_offset_y
