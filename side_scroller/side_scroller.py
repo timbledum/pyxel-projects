@@ -7,6 +7,7 @@ from camera import Camera
 from player import Player
 from level import Level
 from particle_emitter import ParticleEmitter
+from sound import Sound
 
 
 class App:
@@ -33,6 +34,8 @@ class App:
         self.camera = Camera(self.level)
         self.player = Player()
         self.sparkle_emitter = ParticleEmitter(self.player)
+        self.sound = Sound()
+        self.sound.start_music() 
 
         self.test_val = 0
         pyxel.run(self.update, self.draw)
@@ -53,6 +56,7 @@ class App:
         if pyxel.btn(pyxel.KEY_SPACE):
             if self.player.grounded:
                 self.player.jump()
+                self.sound.sfx_jump()
         if pyxel.btn(pyxel.KEY_ESCAPE):
             pyxel.quit()
         if pyxel.btn(pyxel.KEY_T):
